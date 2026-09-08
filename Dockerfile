@@ -17,7 +17,7 @@
 # Example docker build commands are available at the end of this file.
 
 ## Setup Build Arguments, to chain multi-stage build selection.
-ARG MATLAB_RELEASE=R2026a
+ARG MATLAB_RELEASE=R2026b
 
 # See https://mathworks.com/help/install/ug/mpminstall.html for product list specfication
 ARG MATLAB_PRODUCT_LIST="MATLAB"
