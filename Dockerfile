@@ -18,6 +18,7 @@
 
 ## Setup Build Arguments, to chain multi-stage build selection.
 ARG MATLAB_RELEASE=R2026b
+ARG TARGET_ARCH=amd64
 
 # See https://mathworks.com/help/install/ug/mpminstall.html for product list specfication
 ARG MATLAB_PRODUCT_LIST="MATLAB"
@@ -67,12 +68,13 @@ ARG UBUNTU_VERSION=24.04
 FROM quay.io/jupyter/base-notebook:ubuntu-${UBUNTU_VERSION} AS base1
 ARG UBUNTU_VERSION
 ARG MATLAB_RELEASE
+ARG TARGET_ARCH
 RUN echo "Installing dependencies for MATLAB ${MATLAB_RELEASE} on Ubuntu ${UBUNTU_VERSION}..."
 
 USER root
 
-ARG MATLAB_DEPS_URL="https://raw.githubusercontent.com/mathworks-ref-arch/container-images/main/matlab-deps/${MATLAB_RELEASE}/ubuntu${UBUNTU_VERSION}/base-dependencies.txt"
-ARG MATLAB_DEPENDENCIES="matlab-deps-${MATLAB_RELEASE}-base-dependencies.txt"
+ARG MATLAB_DEPS_URL="https://raw.githubusercontent.com/mathworks-ref-arch/container-images/main/matlab-deps/${MATLAB_RELEASE}/ubuntu${UBUNTU_VERSION}/base-dependencies-${TARGET_ARCH}.txt"
+ARG MATLAB_DEPENDENCIES="matlab-deps-${MATLAB_RELEASE}-base-dependencies-${TARGET_ARCH}.txt"
 ARG ADDITIONAL_PACKAGES="wget curl unzip ca-certificates xvfb git vim fluxbox gettext"
 RUN export DEBIAN_FRONTEND=noninteractive && apt-get update \
     && apt-get install --no-install-recommends -y ${ADDITIONAL_PACKAGES}\
